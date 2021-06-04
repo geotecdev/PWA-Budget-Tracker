@@ -43,5 +43,14 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="index.js"></script>
+  <script>
+    (function () {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./service-worker.js", { scope: "/" })
+          .then(() => console.log("service worker registered"))
+          .catch(err => console.log("something went wrong with the service worker registration: ", err));
+      }
+    })();
+  </script>
 </body>
 </html>
