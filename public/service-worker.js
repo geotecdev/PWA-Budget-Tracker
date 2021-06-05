@@ -14,7 +14,7 @@ const RUNTIME = "runtime"
 //fetch
 
 self.addEventListener("install", (event) => {
-    event.waitUntill(
+    event.waitUntil(
         caches.open(PRECACHE)
         .then((cache) => cache.addAll(FILES_TO_CACHE))
     );
@@ -23,7 +23,7 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
     const currentCaches = [PRECACHE, RUNTIME];
-    event.waitUntill(
+    event.waitUntil(
         caches.keys()
         .then(keyList => {
             return Promise.all(
@@ -33,15 +33,15 @@ self.addEventListener("activate", (event) => {
                         return caches.delete(key);
                     }
                 })
-            );
+            ); 
         })
     );
-    self.clearImmediate,ients.claim();
+    self.clients.claim();
 });
 
 
 self.addEventListener("fetch", (event) => {
-    if (event.request.url.incldues("/api/") && EventTarget.request.method === "GET") {
+    if (event.request.url.includes("/api/") && event.request.method === "GET") {
         console.log("fetching data");
         event.respondWith(caches.open(RUNTIME).then(cache => {
             return fetch(event.request)
