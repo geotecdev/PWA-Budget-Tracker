@@ -8,11 +8,6 @@ const FILES_TO_CACHE = [
 const PRECACHE = "precache-v1"
 const RUNTIME = "runtime"
 
-//self.event listeners
-//install
-//activate
-//fetch
-
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(PRECACHE)
@@ -47,7 +42,7 @@ self.addEventListener("fetch", (event) => {
             return fetch(event.request)
             .then(response => {
                 if (response.status === 200) {
-                    cache.put(event.request, response.clone());
+                    cache.put(event.request.url, response.clone());
                 }
                 return response;
             })
@@ -55,8 +50,7 @@ self.addEventListener("fetch", (event) => {
                 console.log(err);
                 return cache.match(event.request);
             });
-        })
-        .catch((err) => console.log(err))
+            })
         );
         return;
     }
